@@ -1,0 +1,198 @@
+[
+  {
+    "timestamp_ms": 7500,
+    "time": "7.5",
+    "description": "ラウンド開始。互いに様子見。",
+    "comment": "データ分析、開始なの！",
+    "emotion": "集中"
+  },
+  {
+    "timestamp_ms": 11600,
+    "time": "11.6",
+    "description": "カリンの立ち中Kが先端でヒット。",
+    "comment": "予測通りヒット！",
+    "emotion": "喜び"
+  },
+  {
+    "timestamp_ms": 12300,
+    "time": "12.3",
+    "description": "春麗のジャンプ強Kがヒット、カリンの対空が潰される。",
+    "comment": "きゃあ、痛い！",
+    "emotion": "焦り"
+  },
+  {
+    "timestamp_ms": 15200,
+    "time": "15.2",
+    "description": "カリンが烈殲破を放つがガードされる。",
+    "comment": "烈殲破！ガードされたの...",
+    "emotion": "残念"
+  },
+  {
+    "timestamp_ms": 15900,
+    "time": "15.9",
+    "description": "カリンのしゃがみ中Pがカウンターヒット。",
+    "comment": "カウンター！よし！",
+    "emotion": "喜び"
+  },
+  {
+    "timestamp_ms": 17400,
+    "time": "17.4",
+    "description": "無尽脚へ繋ぎダウンを奪う。",
+    "comment": "無尽脚でダウン奪取！",
+    "emotion": "達成感"
+  },
+  {
+    "timestamp_ms": 21000,
+    "time": "21.0",
+    "description": "春麗の気功拳にカリンが当たり、ダメージを受ける。",
+    "comment": "気功拳、演算ミス！",
+    "emotion": "焦り"
+  },
+  {
+    "timestamp_ms": 26100,
+    "time": "26.1",
+    "description": "空中戦で春麗の攻撃が打ち勝つ。",
+    "comment": "うわぁ、空中戦負けた...",
+    "emotion": "悔しい"
+  },
+  {
+    "timestamp_ms": 30300,
+    "time": "30.3",
+    "description": "カリン、しゃがみ中Kから天狐へコンボ始動。",
+    "comment": "天狐からコンボ始動！",
+    "emotion": "興奮"
+  },
+  {
+    "timestamp_ms": 31400,
+    "time": "31.4",
+    "description": "大蛇（オロチ）で追撃しダメージを与える。",
+    "comment": "大蛇で追撃、完璧なの！",
+    "emotion": "喜び"
+  },
+  {
+    "timestamp_ms": 33000,
+    "time": "33.0",
+    "description": "カリンの起き攻めダッシュを春麗が小技で止める。",
+    "comment": "起き攻め止められた...",
+    "emotion": "残念"
+  },
+  {
+    "timestamp_ms": 36000,
+    "time": "36.0",
+    "description": "春麗、しゃがみ中KからVトリガー（錬気功）発動。",
+    "comment": "春麗のVトリガー起動！警戒レベル上昇！",
+    "emotion": "警戒"
+  },
+  {
+    "timestamp_ms": 41900,
+    "time": "41.9",
+    "description": "カリンの立ち強Pがクラッシュカウンターヒット。",
+    "comment": "クラッシュカウンター！最大出力、発動！",
+    "emotion": "興奮"
+  },
+  {
+    "timestamp_ms": 45600,
+    "time": "45.6",
+    "description": "春麗が反撃、立ち中Pを当てる。",
+    "comment": "やられちゃった...",
+    "emotion": "焦り"
+  },
+  {
+    "timestamp_ms": 46900,
+    "time": "46.9",
+    "description": "しゃがみ中Kへコンボを繋ぐ。",
+    "comment": "まだ続くの！？",
+    "emotion": "焦り"
+  },
+  {
+    "timestamp_ms": 47700,
+    "time": "47.7",
+    "description": "百裂脚でキャンセルしダメージを伸ばす。",
+    "comment": "百裂脚だ、痛い痛い！",
+    "emotion": "痛み"
+  },
+  {
+    "timestamp_ms": 48500,
+    "time": "48.5",
+    "description": "コンボ終了、カリンの体力が大幅に減る。",
+    "comment": "体力ゲージが赤色に！危険信号発令！",
+    "emotion": "危機"
+  },
+  {
+    "timestamp_ms": 50000,
+    "time": "50.0",
+    "description": "カリン、Vトリガー（神月流 紅蓮の型）発動から紅蓮拳。",
+    "comment": "来たわ！私のVトリガー、「神月流 紅蓮の型」起動！紅蓮拳！",
+    "emotion": "興奮"
+  },
+  {
+    "timestamp_ms": 51500,
+    "time": "51.5",
+    "description": "紅蓮拳の派生攻撃が連続ヒット。",
+    "comment": "連続ヒット！気持ちいいの！",
+    "emotion": "喜び"
+  },
+  {
+    "timestamp_ms": 53000,
+    "time": "53.0",
+    "description": "紅蓮崩掌へ派生。",
+    "comment": "紅蓮崩掌で押し込む！",
+    "emotion": "興奮"
+  },
+  {
+    "timestamp_ms": 53700,
+    "time": "53.7",
+    "description": "さらに派生攻撃を続ける。",
+    "comment": "止まらないの！",
+    "emotion": "興奮"
+  },
+  {
+    "timestamp_ms": 54300,
+    "time": "54.3",
+    "description": "コンボ完走、春麗を画面端へ。",
+    "comment": "コンボ完走！画面端に捕獲したわ！",
+    "emotion": "達成感"
+  },
+  {
+    "timestamp_ms": 58400,
+    "time": "58.4",
+    "description": "春麗、カリンの隙に小技（立ち弱P）で確定反撃。",
+    "comment": "うわ、読みが甘かった...",
+    "emotion": "焦り"
+  },
+  {
+    "timestamp_ms": 59000,
+    "time": "59.0",
+    "description": "立ち中Pへ繋ぐ。",
+    "comment": "また繋がれた！",
+    "emotion": "焦り"
+  },
+  {
+    "timestamp_ms": 59600,
+    "time": "59.6",
+    "description": "EX百裂脚でコンボを締める。",
+    "comment": "EX百裂脚！大ダメージ！",
+    "emotion": "痛み"
+  },
+  {
+    "timestamp_ms": 69600,
+    "time": "69.6",
+    "description": "カリンの牽制（立ち強K等）がヒットし春麗瀕死。",
+    "comment": "あ、あと少し！データが示す勝機！",
+    "emotion": "期待"
+  },
+  {
+    "timestamp_ms": 70900,
+    "time": "70.9",
+    "description": "最後は大蛇（オロチ）が決まりKO。",
+    "comment": "大蛇でKO！私の勝利なの！ふふん♪",
+    "emotion": "勝利"
+  },
+  {
+    "timestamp_ms": 76200,
+    "time": "76.2",
+    "description": "ラウンド終了。",
+    "comment": "完璧なラウンドだったわ！",
+    "emotion": "満足"
+  }
+]

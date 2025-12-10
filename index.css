@@ -1,0 +1,567 @@
+@charset "UTF-8";
+.light {
+  --background: #F3F3F6;
+  --text: #1A1C1E;
+  --border: #C6C6C9;
+  --highlight: #fff;
+  --track: #86878A;
+  --link: #2872E3;
+}
+
+.dark {
+  --background: #1A1C1E;
+  --text: #fff;
+  --border: #37393C;
+  --highlight: #000;
+  --track: #37393C;
+  --link: #87A9FF;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-variant-ligatures: none;
+}
+
+:root {
+  --track-fill: #fff;
+  --mid: #757575;
+  font-family: "Space Mono", monospace;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
+
+li {
+  list-style: none;
+}
+
+input, textarea {
+  font-family: "Space Mono", monospace;
+  background: none;
+  color: var(--text);
+  border: none;
+  outline: none;
+  font-size: 14px;
+  resize: none;
+  user-select: text;
+}
+input::placeholder, textarea::placeholder {
+  user-select: none;
+}
+
+textarea {
+  width: 100%;
+  background: var(--highlight);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+}
+textarea.active {
+  border-color: var(--text);
+}
+
+[role=button] {
+  cursor: pointer;
+}
+
+button {
+  font-family: "Space Mono", monospace;
+  background: none;
+  color: var(--text);
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+button:focus {
+  outline: none;
+}
+button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+button .icon {
+  display: block;
+}
+
+.button {
+  padding: 8px 10px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.button.inactive {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.icon {
+  font-family: "Material Symbols Outlined";
+  font-weight: 300;
+  line-height: 1;
+}
+
+main {
+  max-width: 1200px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  overflow: hidden;
+  background: var(--background);
+  color: var(--text);
+}
+
+.top {
+  display: flex;
+  min-height: 50vh;
+  border-bottom: 1px solid var(--border);
+}
+
+.tools {
+  display: flex;
+  gap: 20px;
+  flex: 1;
+  overflow: hidden;
+  transition: opacity 0.2s;
+}
+.tools.inactive {
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.collapseButton {
+  border-left: 1px solid var(--border);
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.collapseButton .icon {
+  font-size: 24px;
+  color: var(--text);
+}
+
+.modeSelector {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  overflow: hidden;
+  width: 250px;
+}
+.modeSelector.hide {
+  width: 0;
+}
+.modeSelector > div {
+  padding: 20px 15px;
+}
+.modeSelector > div:first-child {
+  flex: 1;
+  overflow: auto;
+}
+.modeSelector > div:last-child {
+  border-top: 1px solid var(--border);
+}
+.modeSelector h2 {
+  font-size: 14px;
+  color: var(--text);
+  white-space: nowrap;
+  margin-bottom: 15px;
+}
+.modeSelector.inactive {
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.modeList {
+  flex-direction: column;
+  display: flex;
+  gap: 10px;
+}
+.modeList .button {
+  justify-content: flex-start;
+  gap: 12px;
+  transition: background 0.2s;
+  background: none;
+  outline: 1px solid var(--border);
+  white-space: nowrap;
+  border-radius: 8px;
+  min-width: fit-content;
+  width: 100%;
+}
+.modeList .button:hover {
+  background: var(--border);
+}
+.modeList .button.active {
+  outline: 2px solid var(--text);
+}
+.modeList + textarea {
+  margin-top: 10px;
+}
+
+.generateButton {
+  padding: 12px 20px;
+  background: var(--highlight);
+  width: 100%;
+  border: 1px solid var(--border);
+}
+
+.backButton {
+  border-top: none !important;
+}
+.backButton button {
+  font-size: 14px;
+}
+
+.output {
+  flex: 1;
+  padding: 20px 15px;
+  overflow: auto;
+  position: relative;
+}
+.output:hover .sentence {
+  opacity: 0.5;
+}
+.output time {
+  color: var(--link);
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-size: inherit;
+  text-decoration: underline;
+}
+.output .sentence {
+  font-size: 18px;
+  line-height: 1.8;
+  display: inline;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.output .sentence:hover {
+  opacity: 1;
+}
+.output .sentence time {
+  margin-right: 8px;
+}
+.output ul {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.output ul button {
+  font-size: 15px;
+  display: flex;
+  gap: 15px;
+  text-align: left;
+  padding: 10px 15px;
+  border-radius: 6px;
+  width: 100%;
+}
+.output ul button:hover {
+  background: var(--border);
+}
+.output ul button p {
+  font-size: 14px;
+}
+
+.modeEmojis .sentence {
+  font-size: 40px;
+  margin-right: 20px;
+}
+.modeEmojis .sentence time {
+  top: -8px;
+}
+
+.modeHaiku .sentence {
+  display: block;
+  font-size: 20px;
+}
+.modeHaiku .sentence time {
+  top: -5px;
+}
+
+.modeTable table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.modeTable th {
+  text-align: left;
+}
+.modeTable th, .modeTable td {
+  padding: 10px;
+}
+.modeTable tr {
+  border-bottom: 1px solid var(--border);
+  display: table-row;
+}
+.modeTable thead tr:hover {
+  background: transparent;
+}
+
+.modelSelector {
+  position: relative;
+  margin-bottom: 10px;
+}
+.modelSelector::after {
+  content: "▾";
+  display: block;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-55%);
+}
+.modelSelector select {
+  width: 100%;
+  appearance: none;
+  color: var(--text);
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-family: "Space Mono", monospace;
+  outline: none;
+}
+
+.loading span {
+  display: inline-block;
+  animation: loading steps(4, jump-none) 777ms infinite;
+  width: 0;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+@keyframes loading {
+  to {
+    width: 30px;
+  }
+}
+
+.lineChart {
+  width: 100%;
+  height: 100%;
+}
+.lineChart path {
+  fill: none;
+  stroke: var(--link);
+  stroke-width: 2;
+}
+.lineChart circle {
+  fill: var(--background);
+  stroke: var(--text);
+  stroke-width: 2;
+}
+
+.axisLabels text {
+  text-anchor: middle;
+  font-size: 12px;
+  fill: var(--text);
+}
+
+.axisTitle {
+  font-size: 12px;
+  fill: var(--text);
+}
+
+.dataPoint text {
+  fill: var(--text);
+  font-size: 12px;
+  text-anchor: middle;
+}
+
+.timeLabels text {
+  cursor: pointer;
+  fill: var(--link);
+  text-decoration: underline;
+}
+
+video {
+  max-height: 50vh;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.videoPlayer {
+  flex: 1;
+  background: #000;
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 0;
+  position: relative;
+  user-select: none;
+  border-left: 1px solid var(--border);
+}
+.videoPlayer:has(.timecodeMarker:hover) .videoCaption {
+  opacity: 0;
+}
+.videoPlayer > div:first-child {
+  display: flex;
+  flex: 1;
+}
+
+.emptyVideo {
+  height: 50vh;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+.emptyVideo p {
+  max-width: 500px;
+  text-align: center;
+}
+.emptyVideo p span {
+  display: inline-block;
+  rotate: -45deg;
+}
+
+.videoCaption {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  position: absolute;
+  bottom: 80px;
+  text-align: center;
+  padding: 10px;
+  color: #fff;
+  max-width: 720px;
+  font-size: 15px;
+  margin-inline: 30px;
+  left: 50%;
+  translate: -50% 0;
+  width: -webkit-fill-available;
+  border-radius: 5px;
+  transition: opacity 0.2s;
+}
+
+.videoControls {
+  font-size: 12px;
+  position: relative;
+  background: var(--background);
+}
+.videoControls:hover .videoScrubber, .videoControls:hover .timecodeMarkerTick {
+  scale: 1 2.3;
+}
+
+.videoScrubber {
+  height: 5px;
+  transform-origin: bottom;
+  transition: all 0.2s;
+  overflow: hidden;
+}
+.videoScrubber input {
+  position: relative;
+  top: -8px;
+  height: 5px;
+  appearance: none;
+  width: 100%;
+  background-image: linear-gradient(to right, var(--track-fill) 0%, var(--track-fill) var(--pct), var(--track) var(--pct), var(--track) 100%);
+}
+.videoScrubber input::-webkit-slider-thumb {
+  opacity: 0;
+}
+
+.videoTime {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  font-size: 15px;
+  border-top: 1px solid var(--border);
+}
+.videoTime button {
+  font-size: 20px;
+}
+
+.timecodeList {
+  overflow: auto;
+  padding: 10px 20px;
+}
+.timecodeList td {
+  padding: 10px 5px;
+}
+.timecodeList button {
+  color: var(--link);
+}
+.timecodeList button:hover {
+  color: var(--link);
+}
+
+.timecodeMarkers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.timecodeMarker {
+  position: absolute;
+  top: 0;
+  width: 10px;
+  background: rgba(0, 0, 0, 0.01);
+  translate: -4px 0;
+}
+.timecodeMarker:hover .timecodeMarkerLabel {
+  opacity: 1;
+}
+
+.timecodeMarkerTick {
+  height: 5px;
+  pointer-events: auto;
+  cursor: pointer;
+  transform-origin: bottom;
+  transition: all 0.2s;
+  background: rgba(0, 0, 0, 0.01);
+  overflow: hidden;
+}
+.timecodeMarkerTick > div {
+  width: 3px;
+  height: 100%;
+  background: var(--link);
+  translate: 3px 0;
+}
+
+.timecodeMarkerLabel {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 11px;
+  transition: opacity 0.1s;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  translate: 0 calc(-100% - 15px);
+  z-index: 99;
+  padding: 8px;
+  border-radius: 5px;
+  width: max-content;
+  max-width: 200px;
+  color: var(--mid);
+}
+.timecodeMarkerLabel.right {
+  right: 0;
+}
+.timecodeMarkerLabel p {
+  color: var(--text);
+  font-size: 13px;
+}

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SF6 Commentary Player</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #1a1a2e;
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #eee;
+        }
+
+        .player-container {
+            position: relative;
+            width: 100%;
+            max-width: 960px;
+            margin: 0 auto 20px;
+        }
+
+        video {
+            width: 100%;
+            border-radius: 8px;
+            background: #000;
+        }
+
+        .commentary-overlay {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 24px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 8px;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            min-width: 200px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            pointer-events: none;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .commentary-overlay.visible {
+            opacity: 1;
+        }
+
+        .commentary-overlay.emotion-興奮,
+        .commentary-overlay.emotion-よし,
+        .commentary-overlay.emotion-いける {
+            color: #4CAF50;
+            border: 2px solid #4CAF50;
+        }
+
+        .commentary-overlay.emotion-痛い,
+        .commentary-overlay.emotion-やばい,
+        .commentary-overlay.emotion-ピンチ,
+        .commentary-overlay.emotion-焦り {
+            color: #f44336;
+            border: 2px solid #f44336;
+        }
+
+        .commentary-overlay.emotion-集中,
+        .commentary-overlay.emotion-緊張 {
+            color: #2196F3;
+            border: 2px solid #2196F3;
+        }
+
+        .commentary-overlay.emotion-嬉しい,
+        .commentary-overlay.emotion-勝利 {
+            color: #FFD700;
+            border: 2px solid #FFD700;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .controls input[type="file"] {
+            display: none;
+        }
+
+        .controls label,
+        .controls button {
+            padding: 10px 20px;
+            background: #4a4a6a;
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .controls label:hover,
+        .controls button:hover {
+            background: #6a6a8a;
+        }
+
+        .controls label.loaded {
+            background: #4CAF50;
+        }
+
+        .timeline {
+            background: #2a2a4a;
+            border-radius: 8px;
+            padding: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .timeline h3 {
+            margin-bottom: 15px;
+            color: #aaa;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 10px;
+            margin-bottom: 8px;
+            background: #3a3a5a;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .timeline-item:hover {
+            background: #4a4a6a;
+        }
+
+        .timeline-item.active {
+            background: #5a5a7a;
+            border-left: 3px solid #4CAF50;
+        }
+
+        .timeline-item .time {
+            min-width: 60px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .timeline-item .comment {
+            flex: 1;
+            margin-left: 10px;
+        }
+
+        .timeline-item .emotion {
+            padding: 2px 8px;
+            background: #555;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        .info {
+            text-align: center;
+            color: #888;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .offset-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .offset-control label {
+            color: #aaa;
+        }
+
+        .offset-control input {
+            width: 80px;
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid #555;
+            background: #2a2a4a;
+            color: #fff;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 SF6 Commentary Player</h1>
+
+        <div class="controls">
+            <label id="videoLabel">
+                📹 動画を選択
+                <input type="file" id="videoInput" accept="video/*">
+            </label>
+            <label id="jsonLabel">
+                📄 commentary_timeline.json
+                <input type="file" id="jsonInput" accept=".json">
+            </label>
+            <button id="playBtn">▶️ 再生</button>
+            <button id="pauseBtn">⏸️ 一時停止</button>
+        </div>
+
+        <div class="offset-control">
+            <label>タイミング調整 (秒):</label>
+            <input type="number" id="offsetInput" value="0" step="0.1">
+        </div>
+
+        <div class="player-container">
+            <video id="video" controls></video>
+            <div class="commentary-overlay" id="overlay"></div>
+        </div>
+
+        <div class="timeline" id="timeline">
+            <h3>📝 タイムライン</h3>
+            <div id="timelineContent">
+                <p style="color: #888;">commentary_timeline.json を読み込んでください</p>
+            </div>
+        </div>
+
+        <p class="info">
+            使い方: 動画とcommentary_timeline.jsonを読み込み、再生するとコメントが表示されます
+        </p>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const overlay = document.getElementById('overlay');
+        const videoInput = document.getElementById('videoInput');
+        const jsonInput = document.getElementById('jsonInput');
+        const videoLabel = document.getElementById('videoLabel');
+        const jsonLabel = document.getElementById('jsonLabel');
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const timelineContent = document.getElementById('timelineContent');
+        const offsetInput = document.getElementById('offsetInput');
+
+        let commentaryData = [];
+        let currentCommentIndex = -1;
+
+        // 動画読み込み
+        videoInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                video.src = URL.createObjectURL(file);
+                videoLabel.textContent = '📹 ' + file.name;
+                videoLabel.classList.add('loaded');
+            }
+        });
+
+        // JSON読み込み
+        jsonInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        commentaryData = JSON.parse(event.target.result);
+                        jsonLabel.textContent = '📄 ' + file.name;
+                        jsonLabel.classList.add('loaded');
+                        renderTimeline();
+                    } catch (err) {
+                        alert('JSONの解析に失敗しました: ' + err.message);
+                    }
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        // タイムライン描画
+        function renderTimeline() {
+            timelineContent.innerHTML = '';
+            commentaryData.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'timeline-item';
+                div.dataset.index = index;
+                div.innerHTML = `
+                    <span class="time">${item.time}秒</span>
+                    <span class="comment">${item.comment || item.description}</span>
+                    ${item.emotion ? `<span class="emotion">${item.emotion}</span>` : ''}
+                `;
+                div.addEventListener('click', () => {
+                    const offset = parseFloat(offsetInput.value) || 0;
+                    video.currentTime = (item.timestamp_ms / 1000) + offset;
+                    video.play();
+                });
+                timelineContent.appendChild(div);
+            });
+        }
+
+        // 再生/一時停止
+        playBtn.addEventListener('click', () => video.play());
+        pauseBtn.addEventListener('click', () => video.pause());
+
+        // コメント表示制御
+        video.addEventListener('timeupdate', () => {
+            if (commentaryData.length === 0) return;
+
+            const offset = parseFloat(offsetInput.value) || 0;
+            const currentTime = (video.currentTime - offset) * 1000; // ミリ秒に変換
+
+            // 現在時刻に対応するコメントを検索
+            let newIndex = -1;
+            for (let i = 0; i < commentaryData.length; i++) {
+                const item = commentaryData[i];
+                const itemTime = item.timestamp_ms;
+                const nextTime = commentaryData[i + 1]?.timestamp_ms || itemTime + 3000;
+
+                if (currentTime >= itemTime && currentTime < nextTime) {
+                    // コメント表示時間は最大3秒
+                    if (currentTime < itemTime + 3000) {
+                        newIndex = i;
+                    }
+                    break;
+                }
+            }
+
+            // コメント更新
+            if (newIndex !== currentCommentIndex) {
+                currentCommentIndex = newIndex;
+
+                // タイムラインのハイライト更新
+                document.querySelectorAll('.timeline-item').forEach((el, idx) => {
+                    el.classList.toggle('active', idx === newIndex);
+                });
+
+                if (newIndex >= 0) {
+                    const item = commentaryData[newIndex];
+                    overlay.textContent = item.comment || item.description;
+                    overlay.className = 'commentary-overlay visible';
+                    if (item.emotion) {
+                        overlay.classList.add('emotion-' + item.emotion);
+                    }
+
+                    // アクティブなタイムラインアイテムをタイムライン内でスクロール（ページはスクロールしない）
+                    const activeItem = document.querySelector('.timeline-item.active');
+                    const timelineEl = document.getElementById('timeline');
+                    if (activeItem && timelineEl) {
+                        const itemTop = activeItem.offsetTop - timelineEl.offsetTop;
+                        const itemBottom = itemTop + activeItem.offsetHeight;
+                        const scrollTop = timelineEl.scrollTop;
+                        const viewHeight = timelineEl.clientHeight;
+
+                        // アイテムが表示範囲外の場合のみスクロール
+                        if (itemTop < scrollTop + 50) {
+                            timelineEl.scrollTo({ top: itemTop - 50, behavior: 'smooth' });
+                        } else if (itemBottom > scrollTop + viewHeight - 50) {
+                            timelineEl.scrollTo({ top: itemBottom - viewHeight + 50, behavior: 'smooth' });
+                        }
+                    }
+                } else {
+                    overlay.classList.remove('visible');
+                }
+            }
+        });
+
+        // キーボードショートカット
+        document.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT') return;
+
+            switch(e.key) {
+                case ' ':
+                    e.preventDefault();
+                    video.paused ? video.play() : video.pause();
+                    break;
+                case 'ArrowLeft':
+                    video.currentTime -= 5;
+                    break;
+                case 'ArrowRight':
+                    video.currentTime += 5;
+                    break;
+            }
+        });
+    </script>
+</body>
+</html>
