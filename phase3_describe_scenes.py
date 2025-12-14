@@ -41,7 +41,7 @@ class Event:
     comment: str = ""
 
 
-def extract_frames(video_path: str, timestamp_ms: int, offsets: list[int] = [-100, 0, 100, 200]) -> list:
+def extract_frames(video_path: str, timestamp_ms: int, offsets: list[int] = [-200, -100, 0, 100, 200]) -> list:
     """
     指定タイムスタンプ付近のフレームを抽出
 

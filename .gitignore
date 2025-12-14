@@ -13,6 +13,7 @@ dist-ssr
 *.local
 
 # Editor directories and files
+.claude/*
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -29,3 +30,10 @@ __pycache__/
 
 # Video files
 *.mp4
+
+# Output files
+phase1_output.csv
+phase2_output.csv
+phase3_output.csv
+phase4_output.csv
+phase4_output.json

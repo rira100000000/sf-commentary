@@ -1,6 +1,0 @@
-{
-  "name": "Video Analyzer",
-  "description": "Chat with any video to instantly summarize, find objects, or extract text with Gemini.",
-  "requestFramePermissions": [],
-  "prompt": ""
-}
